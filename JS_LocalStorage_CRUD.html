@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div id="main-Container">
+	
+</div><br>
+<div class="container" id="CenContainer">
+	<input type="text" id="textBox">
+	<input type="button" value="Insert" id="btn" onClick="insertData(textBox.value)">
+</div>
+<div class="container">
+	<table>
+		<tbody id="tableBody">
+		</tbody>
+	</table>
+</div>
+	
+<script>
+	var btn=document.getElementById('btn');
+	var textBox = document.getElementById('textBox');
+	var tableBody = document.getElementById('tableBody');
+	var mainContainer = document.getElementById('main-Container');
+	var key = localStorage.length+1;
+	getData();	
+	
+	function insertData(val){
+		localStorage.setItem(key,val);
+		key++;
+		tableBody.innerHTML= "";
+		getData();
+	}
+	function getData(){
+		for(i=1;i<=localStorage.length;i++)
+			{
+				tableBody.innerHTML += "<tr><td>"+localStorage.getItem(i)+"</td><td id="+i+">&nbsp; <button id="+i+" onClick='updateData("+i+")'>Update</button></td><td id="+i+">&nbsp; <button id="+i+" onClick='removeData("+i+")'>Delete </button></td></tr>";
+			}
+	}
+	function removeData(k){
+		localStorage.removeItem(k);
+		tableBody.innerHTML= "";
+		getData();
+	}
+	function updateData(key){
+		mainContainer.innerHTML = "";
+		mainContainer.innerHTML += "<input type='text' id='textBoxUpdate'><input type='button' value='Update' id='btn' >";
+		var updateTextBox = document.getElementById("textBoxUpdate");
+		var item = localStorage.getItem(key);
+		//alert(item);
+		updateTextBox.value = item;
+	}
+</script>
+</body>
+</html>
